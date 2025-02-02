@@ -1,15 +1,22 @@
-import { useState } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './App.css'
+import Footer from './component/Footer'
+import Headers from './component/Header';
+import Logins from './pages/Login';
+
+
+
+
 
 function App() {
-  const [count, setCount] = useState(0)
+
 
   return (
-    <>
-      
-     Hello
-    
+    <> 
+    <Headers/>
+  <Logins/>
+    <Footer/>
     </>
   )
 }
