@@ -1,24 +1,22 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import './App.css'
-import Footer from './component/Footer'
-import Headers from './component/Header';
-import Logins from './pages/Login';
 
-
-
-
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import AppRoutes from "./routes";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+// import "./styles/global.css";
 
 function App() {
-
-
   return (
-    <> 
-    <Headers/>
-  <Logins/>
-    <Footer/>
-    </>
-  )
+    <Router>
+      <Navbar />
+      <AppRoutes />
+      <Footer />
+    </Router>
+  );
 }
 
-export default App
+export default App;
+
