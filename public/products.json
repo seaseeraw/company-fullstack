@@ -1,0 +1,28 @@
+
+
+
+  [
+    {
+      "id": 1,
+      "title": "Gaming Laptop",
+      "price": 1299.99,
+      "image": "https://images.unsplash.com/photo-1605296867304-46d5465a13f1",
+      "description": "This is a detailed description for Product A. It explains all the features and benefits of the product in more depth."
+    },
+    {
+      "id": 2,
+      "title": "Wireless Headphones",
+      "price": 199.99,
+      "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9",
+      "description": "This is a detailed description for Product B. It explains all the features and benefits of the product in more depth."
+    },
+    {
+      "id": 3,
+      "title": "Smartphone",
+      "price": 899.99,
+      "image": "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
+      "description": "This is a detailed description for Product C. It explains all the features and benefits of the product in more depth."
+    }
+  ]
+  
+  
