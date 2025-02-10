@@ -1,68 +1,58 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
+
+
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import { Container, Form, Button } from "react-bootstrap";
+import "../App.css"; // Import styles
 
 const Login = () => {
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-    console.log("Email:", email, "Password:", password);
+    if (email === "admin@example.com" && password === "password") {
+      login({ email });
+      navigate("/cart");
+    } else {
+      setError("Invalid email or password!");
+    }
   };
 
   return (
-    <Container className="d-flex justify-content-center align-items-center min-vh-100">
-      <Row>
-        <Col xs={12}>
-          <Card className="p-4 shadow-lg" style={{ maxWidth: "400px", margin: "auto" }}>
-            <Card.Body>
-              <h2 className="text-center mb-4">Login</h2>
-              <Form onSubmit={handleSubmit}>
-                {/* Email Field */}
-                <Form.Group className="mb-3">
-                  <Form.Label>Email Address</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </Form.Group>
+    <Container className="login-container">
+      <h2>Login</h2>
+      <Form onSubmit={handleLogin}>
+        <Form.Group controlId="email">
+          <Form.Label>Email:</Form.Label>
+          <Form.Control
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </Form.Group>
 
-                {/* Password Field */}
-                <Form.Group className="mb-3">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                </Form.Group>
+        <Form.Group controlId="password">
+          <Form.Label>Password:</Form.Label>
+          <Form.Control
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </Form.Group>
 
-                {/* Login Button */}
-                <Button type="submit" variant="primary" className="w-100">
-                  Login
-                </Button>
-              </Form>
+        {error && <p className="error-message">{error}</p>}
 
-              {/* Links */}
-              <div className="text-center mt-3">
-                <small>
-                  Don't have an account? <Link to="/register">Sign up</Link>
-                </small>
-                <br />
-                <small>
-                  <Link to="/forgot-password">Forgot password?</Link>
-                </small>
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+        <Button variant="primary" type="submit" className="mt-3">
+          Login
+        </Button>
+      </Form>
     </Container>
   );
 };
