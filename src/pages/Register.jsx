@@ -106,105 +106,177 @@
 // };
 
 // export default Register;
-import React, { useState } from "react";
-import { Container, Form, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import "../App.css"; // Import CSS for styling
+// import React, { useState } from "react";
+// import { Container, Form, Button } from "react-bootstrap";
+// import { useNavigate } from "react-router-dom";
+// import { toast } from "react-toastify";
+// import "../App.css"; // Import CSS for styling
+
+// const Register = () => {
+//   const navigate = useNavigate();
+//   const [formData, setFormData] = useState({
+//     name: "",
+//     email: "",
+//     password: "",
+//     confirmPassword: "",
+//   });
+
+//   const { name, email, password, confirmPassword } = formData;
+
+//   const handleChange = (e) => {
+//     setFormData({ ...formData, [e.target.name]: e.target.value });
+//   };
+
+//   const handleRegister = (e) => {
+//     e.preventDefault();
+
+//     // Simple validation
+//     if (!name || !email || !password || !confirmPassword) {
+//       toast.error("All fields are required!");
+//       return;
+//     }
+
+//     if (password !== confirmPassword) {
+//       toast.error("Passwords do not match!");
+//       return;
+//     }
+
+//     toast.success("Registration successful! 🎉 Redirecting to login...", {
+//       autoClose: 3000,
+//     });
+
+//     // Simulate user registration (Replace with API call)
+//     setTimeout(() => {
+//       navigate("/login"); // Redirect to login after successful registration
+//     }, 3000);
+//   };
+
+//   return (
+//     <Container className="register-container">
+//       <h2 className="text-center mb-4">Register</h2>
+//       <Form onSubmit={handleRegister} className="register-form">
+//         <Form.Group controlId="name">
+//           <Form.Label>Name:</Form.Label>
+//           <Form.Control
+//             type="text"
+//             name="name"
+//             value={name}
+//             onChange={handleChange}
+//             required
+//           />
+//         </Form.Group>
+
+//         <Form.Group controlId="email">
+//           <Form.Label>Email:</Form.Label>
+//           <Form.Control
+//             type="email"
+//             name="email"
+//             value={email}
+//             onChange={handleChange}
+//             required
+//           />
+//         </Form.Group>
+
+//         <Form.Group controlId="password">
+//           <Form.Label>Password:</Form.Label>
+//           <Form.Control
+//             type="password"
+//             name="password"
+//             value={password}
+//             onChange={handleChange}
+//             required
+//           />
+//         </Form.Group>
+
+//         <Form.Group controlId="confirmPassword">
+//           <Form.Label>Confirm Password:</Form.Label>
+//           <Form.Control
+//             type="password"
+//             name="confirmPassword"
+//             value={confirmPassword}
+//             onChange={handleChange}
+//             required
+//           />
+//         </Form.Group>
+
+//         <Button variant="primary" type="submit" className="mt-3 w-100">
+//           Register
+//         </Button>
+//       </Form>
+//     </Container>
+//   );
+// };
+
+// export default Register;
+
+
+// RegisterForm.js
+
+import React, { useState } from 'react';
+import axios from 'axios';
+
 
 const Register = () => {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  const { name, email, password, confirmPassword } = formData;
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleRegister = (e) => {
-    e.preventDefault();
-
-    // Simple validation
-    if (!name || !email || !password || !confirmPassword) {
-      toast.error("All fields are required!");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      toast.error("Passwords do not match!");
-      return;
-    }
-
-    toast.success("Registration successful! 🎉 Redirecting to login...", {
-      autoClose: 3000,
+    const [user, setUser] = useState({
+        name: '',
+        email: '',
+        password: ''
     });
 
-    // Simulate user registration (Replace with API call)
-    setTimeout(() => {
-      navigate("/login"); // Redirect to login after successful registration
-    }, 3000);
-  };
+    const handleChange = (e) => {
+        setUser({
+            ...user,
+            [e.target.name]: e.target.value
+        });
+    };
 
-  return (
-    <Container className="register-container">
-      <h2 className="text-center mb-4">Register</h2>
-      <Form onSubmit={handleRegister} className="register-form">
-        <Form.Group controlId="name">
-          <Form.Label>Name:</Form.Label>
-          <Form.Control
-            type="text"
-            name="name"
-            value={name}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // Prevents the default form submission
 
-        <Form.Group controlId="email">
-          <Form.Label>Email:</Form.Label>
-          <Form.Control
-            type="email"
-            name="email"
-            value={email}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+        try {
+            const response = await axios.post('http://localhost:5000/api/users', user);
+            console.log(response.data);
+        } catch (error) {
+            console.error('There was an error!', error);
+        }
+    };
 
-        <Form.Group controlId="password">
-          <Form.Label>Password:</Form.Label>
-          <Form.Control
-            type="password"
-            name="password"
-            value={password}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
-
-        <Form.Group controlId="confirmPassword">
-          <Form.Label>Confirm Password:</Form.Label>
-          <Form.Control
-            type="password"
-            name="confirmPassword"
-            value={confirmPassword}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
-
-        <Button variant="primary" type="submit" className="mt-3 w-100">
-          Register
-        </Button>
-      </Form>
-    </Container>
-  );
+    return (
+        <div className="register-form">
+            <h2>Register</h2>
+            <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label>Name</label>
+                    <input
+                        type="text"
+                        name="name"
+                        value={user.name}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Email</label>
+                    <input
+                        type="email"
+                        name="email"
+                        value={user.email}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        name="password"
+                        value={user.password}
+                        onChange={handleChange}
+                    />
+                </div>
+                <button type="submit" className="submit-button">Submit</button>
+            </form>
+        </div>
+    );
 };
 
 export default Register;
+
